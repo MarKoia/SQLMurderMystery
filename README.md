@@ -6,7 +6,7 @@ In this project I'm solving the [SQL Murder Mystery](https://mystery.knightlab.c
 A crime has taken place and the detective needs my help. The detective gave me the crime scene report, but I somehow lost it. I vaguely remember that the crime was a ​murder​ that occurred sometime on ​Jan.15, 2018​ and that it took place in ​SQL City​. I should start by retrieving the corresponding crime scene report from the police department’s database.
 
 ## Database schema:
-![Database schema](db_schema.png)
+![Database schema](db/db_schema.png)
 
 ## Retrieving the crime scene report
 Since I remember that the crime was a `​murder`​ that occurred sometime on `​Jan.15, 2018`​ and that it took place in `​SQL City`, I'm going to search the **crime_scene_report** table to retrieve the discription of the crime with the following [query](queries/crime_scene_report_description.sql).
