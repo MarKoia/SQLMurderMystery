@@ -131,3 +131,52 @@ Output:
 ```
 "I was hired by a woman with a lot of money. I don't know her name but I know she's around 5'5" (65") or 5'7" (67"). She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017."
 ```
+## The Killer
+It seems like we are on the verge of finding the key person. Here's the usefull info that we took from the hitman interview:
+- has a lot of money
+- is around 5'5" (65") or 5'7" (67")
+- has red hair
+- owns a Tesla
+  - Model S
+- attended the SQL Symphony Concert
+  - 3 times in Dec 2017
+
+All the leads are scattered around the tables:
+- income
+- person
+- drivers_license
+- facebook_event_checkin
+
+Killer [Query](queries/killer.sql)
+
+```sql
+select person.name
+from income
+inner join person
+   on income.ssn=person.ssn
+inner join drivers_license as dl
+   on person.license_id=dl.id
+inner join facebook_event_checkin as fec
+   on person.id=fec.person_id
+where dl.hair_color= 'red' and dl.height between 65 and 67 and dl.car_make='Tesla'
+and dl.car_model='Model S' and fec.event_name='SQL Symphony Concert'
+and fec.date like '201712%'
+group by person.name
+having count(person.name)=3
+order by income.annual_income desc
+```
+
+Output: `Miranda Priestly`
+
+Now I'm going to [check](queries/result.sql) if I actually found the killer.
+
+```sql
+insert into solution values (1, 'Miranda Priestly');
+
+select value from solution;
+```
+
+Output:
+```
+Congrats, you found the brains behind the murder! Everyone in SQL City hails you as the greatest SQL detective of all time. Time to break out the champagne!
+```
