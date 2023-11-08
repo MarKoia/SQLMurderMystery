@@ -53,7 +53,7 @@ Output:
 
 ## Witnesses Interviews
 
-Let's see what the witness 1 & 2 saw that night.
+Let's [see](queries/witnesses_interviews.sql) what the witness 1 & 2 saw that night.
 
 > I'm going to use the persons ID on the interview table (where the person_id is the FK from the person table)
 
@@ -73,3 +73,49 @@ Output:
 |Witness 1 |I heard a gunshot and then saw a man run out. He had a "Get Fit Now Gym" bag. The membership number on the bag started with "48Z". Only gold members have those bags. The man got into a car with a plate that included "H42W".  |
 |Witness 2 | I saw the murder happen, and I recognized the killer from my gym when I was working out last week on January the 9th. |
 
+## Following the leads
+
+From the witnesses interviews we got the following leads:
+- man
+- "Get Fit Now Gym" bag
+- membership number started with "48Z"
+- gold membership status
+- car plate includes "H42W"
+- last week, 9th of Jan
+
+**Let's search!**
+
+First, I'm going to extract all the person IDs from the gym info that I got from the witnesses, hence I'll be using the tables get_fit_now_check_in and get_fit_now_member.
+
+Then, I will limit down the suspects, based on their license plates.
+
+Gym Info [Query](queries/suspects_from_gym_info.sql)
+
+```sql
+select get_fit_now_member.person_id
+from get_fit_now_member
+inner join get_fit_now_check_in
+   on get_fit_now_member.id=get_fit_now_check_in.membership_id
+where get_fit_now_check_in.check_in_date=20180109 and get_fit_now_member.id like '48Z%'
+ and get_fit_now_member.membership_status= 'gold'
+```
+Output:
+
+| person_id |
+|--|
+|  28819  |
+|  67318  |
+
+License Info [Query](queries/main_suspect_license.sql)
+
+```sql
+select person.id as MainSuspect
+from person
+inner join drivers_license
+   on person.license_id=drivers_license.id
+where drivers_license.plate_number like '%H42W%' and person.id in (28819,67318)
+```
+Output:
+| MainSuspect |
+|--|
+|  67318  |
