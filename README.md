@@ -20,3 +20,34 @@ Output:
 ```
 Security footage shows that there were 2 witnesses. The first witness lives at the last house on "Northwestern Dr". The second witness, named Annabel, lives somewhere on "Franklin Ave".
 ```
+## Witnesses
+From the report above I know we have **2** witnesses:
+1. located at the `last` house on `"Northwestern Dr"`
+2. `Annabel`, somewhere on `"Franklin Ave"`. 
+
+**Let's search!**
+
+I notice that the clues I'm looking for are attributes in the person table and all I need for now are their IDs.
+
+[Witness 1](queries/witness1_id.sql)
+```sql
+select id
+from person
+where address_street_name='Northwestern Dr'
+order by address_number desc 
+limit 1
+```
+Output: 
+`ID=14887`
+
+[Witness 2](queries/witness2_id.sql)
+
+```sql
+select id
+from person
+where name like 'Annabel%' and address_street_name = 'Franklin Ave'
+limit 1
+```
+Output: 
+`ID=16371`
+
