@@ -51,3 +51,25 @@ limit 1
 Output: 
 `ID=16371`
 
+## Witnesses Interviews
+
+Let's see what the witness 1 & 2 saw that night.
+
+> I'm going to use the persons ID on the interview table (where the person_id is the FK from the person table)
+
+```sql
+select 
+case
+	when person_id=14887 then 'Witness 1'
+	else  'Witness 2'
+end as witness, transcript	
+from interview
+where person_id in (14887, 16371)
+```
+Output:
+
+|witness|transcript  |
+|--|--|
+|Witness 1 |I heard a gunshot and then saw a man run out. He had a "Get Fit Now Gym" bag. The membership number on the bag started with "48Z". Only gold members have those bags. The man got into a car with a plate that included "H42W".  |
+|Witness 2 | I saw the murder happen, and I recognized the killer from my gym when I was working out last week on January the 9th. |
+
