@@ -119,3 +119,15 @@ Output:
 | MainSuspect |
 |--|
 |  67318  |
+
+## Main Suspect Interview
+Even though we know the person's ID, we also need to know what his statement was.
+```sql
+select transcript
+from interview
+where person_id=67318
+```
+Output:
+```
+"I was hired by a woman with a lot of money. I don't know her name but I know she's around 5'5" (65") or 5'7" (67"). She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017."
+```
